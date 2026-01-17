@@ -31,3 +31,6 @@ Sistema bancário simples em linha de comando (CLI) desenvolvido para praticar *
    ```bash
    git clone https://github.com/Tellth/sistema-bancario-python.git
    cd sistema-bancario-python
+2. Execute o programa:
+   ```bash
+   python sistema-bancario-v3.0.py
