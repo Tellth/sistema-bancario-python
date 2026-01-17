@@ -33,4 +33,4 @@ Sistema bancário simples em linha de comando (CLI) desenvolvido para praticar *
    cd sistema-bancario-python
 2. Execute o programa:
    ```bash
-   python sistema-bancario-v3.0.py
+   python sistema_bancario_v3.0.py

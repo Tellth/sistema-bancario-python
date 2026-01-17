@@ -88,10 +88,10 @@ def menu():
     [d]\tDepositar
     [s]\tSacar
     [e]\tExtrato
-    [nu]\tNovo usuário
-    [nc]\tNova conta
-    [lc]\tListar contas
-    [q]\tSair
+    [nu]Novo usuário
+    [nc]Nova conta
+    [lc]Listar contas
+    [q]Sair
     => """
     return input(textwrap.dedent(menu))
 
