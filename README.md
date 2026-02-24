@@ -1,14 +1,14 @@
-# Sistema Bancário v3.0 em Python
+# Sistema Bancário em Python
 
 Sistema bancário simples em linha de comando (CLI) desenvolvido para praticar **Programação Orientada a Objetos**, validações, controle de limites e boa organização de código.
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Em%20desenvolvimento-yellow)
 
-## Funcionalidades Principais (v3.0)
+## Funcionalidades Principais
 
 - Cadastro de usuários (com CPF único)
-- Criação de múltiplas contas por usuário
+- Criação de múltiplas contas por usuário (apesar de não usuais lol)
 - Depósitos ilimitados
 - Saques com limite diário (R$ 500 por saque / máximo 3 saques por dia)
 - Limite geral de 10 transações por dia
