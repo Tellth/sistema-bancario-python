@@ -26,14 +26,14 @@ class ContaBancaria:
         self.saques_hoje = 0
         self.data_transacoes = date.today()
 
-    def resetar_limites_diarios(self):
+    def reset_limites_diarios(self):
         if self.data_transacoes != date.today():
             self.data_transacoes = date.today()
             self.transacoes_dia = 0
             self.saques_hoje = 0
 
     def depositar(self, valor):
-        self.resetar_limites_diarios()
+        self.reset_limites_diarios()
         if self.transacoes_dia >= ContaBancaria.MAX_TRANSACOES_DIA:
             print("Limite de transações diárias atingido.")
             return
@@ -41,13 +41,13 @@ class ContaBancaria:
         if valor > 0:
             self.saldo += valor
             self.transacoes_dia += 1
-            self.extrato.append(f"{datetime.now()} | Depósito: +R$ {valor:.2f}")
+            self.extrato.append(f"{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} | Depósito: +R$ {valor:.2f}")
             print("Depósito realizado com sucesso!")
         else:
             print("Valor inválido para depósito.")
 
     def sacar(self, valor):
-        self.resetar_limites_diarios()
+        self.reset_limites_diarios()
         if self.transacoes_dia >= ContaBancaria.MAX_TRANSACOES_DIA:
             print("Limite de transações diárias atingido.")
             return
@@ -67,7 +67,7 @@ class ContaBancaria:
         self.saldo -= valor
         self.transacoes_dia += 1
         self.saques_hoje += 1
-        self.extrato.append(f"{datetime.now()} | Saque: -R$ {valor:.2f}")
+        self.extrato.append(f"{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} | Saque: -R$ {valor:.2f}")
         print("Saque realizado com sucesso!")
 
     def exibir_extrato(self):
@@ -82,29 +82,34 @@ class ContaBancaria:
 
 # ================= FUNÇÕES ====================
 
-def menu():
+def tela_menu():
     menu = """\n
     ================ MENU ================
-    [d]\tDepositar
-    [s]\tSacar
-    [e]\tExtrato
-    [nu]Novo usuário
-    [nc]Nova conta
-    [lc]Listar contas
-    [q]Sair
+    [ d ]  Depositar
+    [ s ]  Sacar
+    [ e ]  Extrato
+    [ nu ] Novo usuário
+    [ nc ] Nova conta
+    [ lc ] Listar contas
+    [ q ]  Sair
     => """
     return input(textwrap.dedent(menu))
 
 def criar_usuario(usuarios):
+ while True:
     cpf = input("Informe o CPF (somente números): ")
+    if cpf.isdigit() and 11 != len(cpf):
+        print("CPF inválido, tente novamente")
+        break
     if filtrar_usuario(cpf, usuarios):
         print("Usuário já cadastrado.")
         return
-    nome = input("Nome completo: ")
+    nome = input(str("Nome completo: "))
     nascimento = input("Data de nascimento (dd-mm-aaaa): ")
-    endereco = input("Endereço (logradouro, número - bairro - cidade/UF): ")
+    endereco = input("Endereço (Rua, número - bairro - cidade/UF): ")
     usuarios.append(Usuario(nome, nascimento, cpf, endereco))
     print("Usuário criado com sucesso!")
+    break
 
 def filtrar_usuario(cpf, usuarios):
     for usuario in usuarios:
@@ -140,7 +145,7 @@ def main():
     contas = []
 
     while True:
-        opcao = menu()
+        opcao = tela_menu().lower()
 
         if opcao == "nu":
             criar_usuario(usuarios)
