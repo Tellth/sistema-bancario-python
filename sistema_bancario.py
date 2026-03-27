@@ -1,7 +1,6 @@
 from datetime import datetime, date
 import textwrap
 
-
 # ================= CLASSES ====================
 
 class Usuario:
@@ -10,15 +9,6 @@ class Usuario:
         self.data_nascimento = data_nascimento
         self.cpf = cpf
         self.endereco = endereco
-
-
-def mascarar_cpf(cpf):
-    return f"{cpf[:3]}.***.***-{cpf[-2:]}"
-
-
-def format_data_nascimento(data_nascimento):
-    return f"{data_nascimento.replace(" ", "/")}"
-
 
 class ContaBancaria:
     AGENCIA_PADRAO = "0001"
@@ -90,7 +80,6 @@ class ContaBancaria:
         print(f"\nSaldo atual: R$ {self.saldo:.2f}")
         print("=========================================")
 
-
 # ================= FUNÇÕES ====================
 
 def tela_menu():
@@ -102,39 +91,31 @@ def tela_menu():
     [ nu ] Novo usuário
     [ nc ] Nova conta
     [ lc ] Listar contas
-    [ lu ] Listar usuários
     [ q ]  Sair
     => """
     return input(textwrap.dedent(menu))
 
-
 def criar_usuario(usuarios):
-    while True:
-        cpf = input("Informe o CPF (somente números): ")
-        if cpf.isdigit() and 11 != len(cpf):
-            print("CPF inválido, tente novamente")
-            break
-        if filtrar_usuario(cpf, usuarios):
-            print("Usuário já cadastrado.")
-            return
-        nome = input(str("Nome completo: "))
-        nascimento = input("Data de nascimento (dd mm aaaa): ")
-        if nascimento.isdigit() and 8 != len(nascimento):
-            print("Data de nascimento inválida, digite novamente")
-            break
-        print("Endereço")
-        endereco = input("Rua: "), input("Número: "), input("Bairro: "), input("Cidade: "), input("UF: ").upper()
-        usuarios.append(Usuario(nome, nascimento, cpf, endereco))
-        print("Usuário criado com sucesso!")
+ while True:
+    cpf = input("Informe o CPF (somente números): ")
+    if cpf.isdigit() and 11 != len(cpf):
+        print("CPF inválido, tente novamente")
         break
-
+    if filtrar_usuario(cpf, usuarios):
+        print("Usuário já cadastrado.")
+        return
+    nome = input(str("Nome completo: "))
+    nascimento = input("Data de nascimento (dd-mm-aaaa): ")
+    endereco = input("Endereço (Rua, número - bairro - cidade/UF): ")
+    usuarios.append(Usuario(nome, nascimento, cpf, endereco))
+    print("Usuário criado com sucesso!")
+    break
 
 def filtrar_usuario(cpf, usuarios):
     for usuario in usuarios:
         if usuario.cpf == cpf:
             return usuario
     return None
-
 
 def criar_conta(contas, usuarios):
     cpf = input("Informe o CPF do usuário: ")
@@ -147,7 +128,6 @@ def criar_conta(contas, usuarios):
     contas.append(conta)
     print("Conta criada com sucesso!")
 
-
 def listar_contas(contas):
     for conta in contas:
         print("=" * 50)
@@ -155,20 +135,8 @@ def listar_contas(contas):
         print(f"Conta Nº: {conta.numero}")
         print(f"Titular: {conta.usuario.nome}")
 
-
-def listar_usuarios(lista_usuarios):
-    if not lista_usuarios:
-        print("Nenhum usuário cadastrado.")
-        return
-
-    for usuario in lista_usuarios:
-        print(f"Nome: {usuario.nome}\nCPF: {mascarar_cpf(usuario.cpf)}\nData de Nascimento: "
-              f"{format_data_nascimento(usuario.data_nascimento)}\nEndereço: {usuario.endereco}\n")
-
-
 def encontrar_conta_por_usuario(cpf, contas):
     return [conta for conta in contas if conta.usuario.cpf == cpf]
-
 
 # ================= PROGRAMA PRINCIPAL ====================
 
@@ -187,9 +155,6 @@ def main():
 
         elif opcao == "lc":
             listar_contas(contas)
-
-        elif opcao == "lu":
-            listar_usuarios(usuarios)
 
         elif opcao in ("d", "s", "e"):
             cpf = input("Informe o CPF do titular: ")
@@ -222,7 +187,6 @@ def main():
 
         else:
             print("Opção inválida.")
-
 
 if __name__ == "__main__":
     main()
